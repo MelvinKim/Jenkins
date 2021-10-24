@@ -1,0 +1,40 @@
+//This pipeline demostrates how to use the "post" attribute in Jenkins
+
+pipeline {
+    agent any
+
+    stages {
+        stage('build') {
+            steps {
+                echo 'building application...'
+            }
+        }
+        stage('test') {
+            steps {
+                echo 'testing application...'
+            }
+        }
+        stage('deploy') {
+            steps{
+                echo 'deploying application'
+            }
+        } 
+    }
+
+    //post attribute -> execute some kind of logic after all the stages are done
+    post {
+        //always -> will execute not matter if pipeline failed or succeeded
+        //eg -> sending an email to the team about the Build status
+        always {
+            
+        }
+        //success -> will execute if the pipeline succeeded
+        success {
+
+        }
+        //failure -> will execute if the pipeline failed
+        failure {
+
+        }
+    }
+}

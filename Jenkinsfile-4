@@ -1,0 +1,35 @@
+//This pipeline demonstrates how to define conditionals for each stage
+
+CODE_CHANGES = getGitChanges()
+
+pipeline {
+    agent any
+
+    stages {
+        stage('build') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'dev' && CODE_CHANGES == true
+                }
+            }
+            steps {
+                echo 'building application...'
+            }
+        }
+        stage('test') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'dev' || env.BRANCH_NAME == 'master'
+                }
+            }
+            steps {  //This stage will only execute if the current branch == dev
+                echo 'testing application...'
+            }
+        }
+        stage('deploy') {
+            steps{
+                echo 'deploying application'
+            }
+        } 
+    }
+}
